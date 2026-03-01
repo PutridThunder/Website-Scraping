@@ -3,36 +3,67 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Libraries](https://img.shields.io/badge/Libraries-Requests%20%7C%20BeautifulSoup%20%7C%20Pandas-green)
 
-A Python web scraping tool that lets you input any UFC event number, fetches the full fight card from the official UFC website, and displays:
+A Python web scraping and data analysis tool that allows users to input any UFC event number, retrieves the full fight card from the official UFC website, and displays structured fight and fighter statistics.
 
-- All matchups (red vs. blue corner)
-- Weight class
-- Results (method, round, time) for past events
-- Detailed official stats for each fighter (striking/takedown accuracy, per-minute rates, win methods, defense, etc.)
+The program extracts and presents:
+- All matchups (red vs. blue corner)  
+- Weight class  
+- Results (method, round, time) for completed events  
+- Detailed official fighter statistics (striking/takedown accuracy, per-minute rates, win methods, defense, etc.)
 
-Future goal: Add a simple ML-based win probability estimation for upcoming fights using fighter stats.
+Future goal: Extend the project with a machine learning component to estimate win probabilities for upcoming fights based on historical fighter statistics.
+
+---
+
+## Project Design & Implementation
+
+This project is built as a multi-stage data pipeline:
+
+### Data Collection
+- Uses **Requests** to retrieve UFC event and fighter profile pages  
+- Uses **BeautifulSoup** to parse complex HTML structures and extract fight card and fighter statistics  
+
+### Data Processing
+- Organizes scraped information into structured formats using **Pandas**  
+- Cleans and formats inconsistent or missing data from the UFC website  
+- Separates event-level data (matchups, results) from fighter-level data (career statistics)  
+
+### Program Flow
+1. User enters a UFC event number through the command line  
+2. The program constructs the corresponding event URL  
+3. Fighter names are extracted from the fight card  
+4. Each fighter’s individual statistics page is scraped  
+5. Results are displayed in a clean, readable format  
+
+---
 
 ## Motivation
 
-I built this to practice web scraping on a more complex, dynamic website (ufc.com). The goal was to create a command-line tool where you enter a UFC event number and get back the entire card with rich fighter details—something fun and useful for MMA fans.
+I built this project to practice web scraping on a complex and dynamic website (ufc.com) and to develop a system that converts unstructured HTML data into structured, meaningful information.
 
-I also plan to extend it with machine learning: for upcoming events, predict win probabilities; for past events, just show results.
+The goal was to create a command-line tool that allows users to quickly view complete UFC event data and fighter statistics in one place.
 
-## How It Works
+This project also serves as a foundation for future data analysis and machine learning experiments using real-world sports data.
 
-1. **Input**: Enter a valid UFC event number (e.g., 323 for a past event, or the next upcoming one).
-2. **Event Page**: The script constructs the URL (`https://www.ufc.com/event/ufc-` + number) and scrapes the fight card.
-3. **Fighter Stats**: Using fighter names, it visits each athlete's official page and extracts career stats.
-4. **Output**: Prints a clean, formatted view of the card with results and individual fighter breakdowns.
+---
 
-Example (for past events like UFC 323):
-- Matchups and results
-- Per-fighter sections with striking, takedowns, win methods, and more
+## Planned Extensions
+
+This project will be expanded in future versions to include:
+
+- Storing fight and fighter data in CSV format for further analysis  
+- Performing statistical summaries (average fight time, win method distributions, fighter performance comparisons)  
+- Visualizing results using Matplotlib  
+- Adding a machine learning model to estimate win probabilities for upcoming fights based on historical data  
+
+These extensions will transform the project from a scraper into a full data analysis and prediction pipeline.
+
+---
 
 ## Current Status
 
-- Works for displaying events: Card details + comprehensive fighter stats
-- error handling for missing pages or incomplete data
+- Successfully retrieves fight card details and comprehensive fighter statistics  
+- Includes error handling for missing pages and incomplete data  
 
 **Known Limitations**:
-- Old events (pre-UFC 100) have different HTML structures and limited stats—some data 
+- Older events (pre-UFC 100) use different HTML structures and contain limited statistics, which may result in missing fields for some fights  
